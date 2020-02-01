@@ -34,14 +34,14 @@ PrioritizedTask QueueElement::getTask() {
 	return task;
 }
 
-bool operator<(const QueueElement& a, const QueueElement& b) {
-	return a.priority < b.priority;
+bool QueueElement::operator<(const QueueElement& a) {
+	return priority < a.priority;
 }
 
-bool operator== (const QueueElement& a, const QueueElement& b) {
-	return a.priority == b.priority;
+bool QueueElement::operator== (const QueueElement& a) {
+	return priority == a.priority;
 }
 
-bool operator> (const QueueElement& a, const QueueElement& b) {
-	return a.priority > b.priority;
+bool QueueElement::operator> (const QueueElement& a) {
+	return priority > a.priority;
 }

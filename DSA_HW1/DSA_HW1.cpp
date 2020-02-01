@@ -9,7 +9,7 @@ int main()
 	auto first = std::make_shared<QueueElement>();
 	first->setPriority(1);
 	auto second = std::make_shared<QueueElement>();
-	second->setPriority(0);
+	second->setPriority(1);
 	if (*(second) == *(first)) {
 		std::cout << "==" << std::endl;
 	}

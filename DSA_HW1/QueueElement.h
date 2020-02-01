@@ -19,14 +19,15 @@ public:
 	const unsigned getPriority();
 	void setPriority(unsigned p);
 
+	bool operator< (const QueueElement& a);
+	bool operator> (const QueueElement& a);
+	bool operator== (const QueueElement& a);
+
 private:
 	unsigned priority;
 	std::shared_ptr<QueueElement> next;
 	std::shared_ptr<QueueElement> prev;
 	PrioritizedTask task;
 
-	friend bool operator< (const QueueElement &a, const QueueElement &b);
-	friend bool operator> (const QueueElement& a, const QueueElement& b);
-	friend bool operator== (const QueueElement& a, const QueueElement& b);
 };
 
