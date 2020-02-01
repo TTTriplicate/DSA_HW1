@@ -27,6 +27,9 @@
     <ClCompile Include="PrioritizedTask.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IDGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PrioritizedQueue.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PrioritizedTask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

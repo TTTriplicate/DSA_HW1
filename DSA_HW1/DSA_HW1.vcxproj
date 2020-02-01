@@ -148,11 +148,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DSA_HW1.cpp" />
+    <ClCompile Include="IDGenerator.cpp" />
     <ClCompile Include="PrioritizedQueue.cpp" />
     <ClCompile Include="PrioritizedTask.cpp" />
     <ClCompile Include="QueueElement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IDGenerator.h" />
     <ClInclude Include="PrioritizedQueue.h" />
     <ClInclude Include="PrioritizedTask.h" />
     <ClInclude Include="QueueElement.h" />
