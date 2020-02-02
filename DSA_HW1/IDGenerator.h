@@ -2,10 +2,10 @@
 class IDGenerator
 {
 public:
-	IDGenerator() = default;
+	IDGenerator();
 	~IDGenerator();
-	unsigned getID();
+	int getID();
 private:
-	unsigned ID = 1;
+	int ID;
 };
 

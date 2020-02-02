@@ -1,7 +1,12 @@
 #include "IDGenerator.h"
 
-unsigned IDGenerator::getID() {
-	return ID++;
+IDGenerator::IDGenerator() {
+	ID = 1;
+}
+
+int IDGenerator::getID() {
+	ID++;
+	return ID - 1;
 }
 
 IDGenerator::~IDGenerator() {};

@@ -1,7 +1,8 @@
 #include "QueueElement.h"
 
 QueueElement::QueueElement() {
-	priority = 1;
+	next = nullptr;
+	prev = nullptr;
 };
 
 QueueElement::~QueueElement() {};
@@ -20,17 +21,25 @@ void QueueElement::setPrev(std::shared_ptr<QueueElement> newPrev) {
 	prev = newPrev;
 }
 
-void QueueElement::setPriority(unsigned p) {
+void QueueElement::setPriority(int p) {
 	priority = p;
 }
-const unsigned QueueElement::getPriority() {
+const int QueueElement::getPriority() {
 	return priority;
 }
 
-void QueueElement::setTask(PrioritizedTask t) {
+void QueueElement::setID(int ID) {
+	id = ID;
+}
+const int QueueElement::getID() {
+	return id;
+}
+
+
+void QueueElement::setTask(std::shared_ptr<PrioritizedTask> t) {
 	task = t;
 }
-PrioritizedTask QueueElement::getTask() {
+std::shared_ptr<PrioritizedTask> QueueElement::getTask() {
 	return task;
 }
 
@@ -38,8 +47,11 @@ bool QueueElement::operator<(const QueueElement& a) {
 	return priority < a.priority;
 }
 
-bool QueueElement::operator== (const QueueElement& a) {
-	return priority == a.priority;
+bool QueueElement::operator== (const QueueElement& a) {//once priority is established, check id for exact item
+	return id == a.id;
+}
+bool QueueElement::operator== (const int& ID) {
+	return id == ID;
 }
 
 bool QueueElement::operator> (const QueueElement& a) {

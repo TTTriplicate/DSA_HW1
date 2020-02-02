@@ -6,17 +6,83 @@
 int main()
 {
 	IDGenerator sequence;
-	auto first = std::make_shared<QueueElement>();
-	first->setPriority(1);
-	auto second = std::make_shared<QueueElement>();
-	second->setPriority(1);
-	if (*(second) == *(first)) {
-		std::cout << "==" << std::endl;
-	}
-	else if (*(second) > *(first)) {
-		std::cout << ">" << std::endl;
-	}
-	else if (*(second) < *(first)) {
-		std::cout << "<" << std::endl;
+	PrioritizedQueue queue;
+
+	QueueElement first;
+	QueueElement second;
+	QueueElement third;
+	first.setPriority(1);
+	second.setPriority(2);
+	third.setPriority(3);
+
+	auto f = std::make_shared<QueueElement>(first);
+	auto s = std::make_shared<QueueElement>(second);
+	auto t = std::make_shared<QueueElement>(third);
+
+	std::cout << (*(f) > *(s)?"True" : "False") << "\n" << (*(f) < *(s)? "True":"False") << "\n" << (*(f) == *(t)?"True":"False") << "\n";
+	while (true) {
+		std::string input;
+		std::cout << "Please enter an option:" << std::endl;
+		std::cout << "(C)reate a task, (S)elect a task, (V)iew all tasks, e(X)it:" << std::endl;
+		getline(std::cin, input);
+		try {
+			if (input.length() > 1) {
+				throw std::invalid_argument("Please select one of the listed options.");
+			}
+			if (tolower(input[0] == 'c')) {
+				std::string fields[5]{ "" };
+				std::cout << "Enter a summary of the task:" << std::endl;
+				getline(std::cin, fields[0]);
+
+				std::cout << "Who will complete this task?" << std::endl;
+				getline(std::cin, fields[1]);
+
+				while (true) {
+					std::cout << "Enter a duration in days, between 1 and 15:" << std::endl;
+					getline(std::cin, fields[2]);
+					if (!isdigit(fields[2][0]) || (fields[2].length() > 1 && !isdigit(fields[2][1]))) {
+						std::cout << "Please only enter numbers." << std::endl;
+						continue;
+					}
+					else if (std::stoi(fields[2]) < 1 || std::stoi(fields[2]) > 15) {
+						std::cout << "Please enter a duration between 1 and 15:" << std::endl;
+						continue;
+					}
+					break;
+				}
+				while(true) {
+					std::cout << "Please enter a priority, between 1 and 5:" << std::endl;
+					getline(std::cin, fields[3]);
+					if (fields[3].length() > 1) {
+						std::cout << "Input too long.  Please enter one number, between 1 and five." << std::endl;
+						continue;
+					}
+					else if (!isdigit(fields[3][0])) {
+						std::cout << "Please enter only numbers." << std::endl;
+						continue;
+					}
+					else if (std::stoi(fields[3]) < 1 || std::stoi(fields[3]) > 5) {
+						std::cout << "Please enter a priority that is between 1 and 5." << std::endl;
+						continue;
+					}
+					break;
+				}
+				int id = sequence.getID();
+				fields[4] = std::to_string(id);
+				std::cout << "The unique ID for this task is: " << fields[4] << std::endl;
+
+				PrioritizedTask newTask(fields);
+				auto toAdd = std::make_shared<PrioritizedTask>(newTask);
+				queue.addElement(toAdd, std::stoi(fields[3]), std::stoi(fields[4]));
+				std::cout << *(queue.findTask(std::stoi(fields[4]))) << std::endl;
+			}
+
+		}
+		catch (std::invalid_argument& e) {
+			std::cerr << e.what();
+		}
+		catch (std::runtime_error & e) {
+			std::cerr << e.what();
+		}
 	}
 }

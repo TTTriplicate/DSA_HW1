@@ -1,26 +1,38 @@
 #pragma once
 #include <string>
+#include <iostream>
 class PrioritizedTask
 {
 public:
 	PrioritizedTask();
+	PrioritizedTask(std::string fields[5]);
 	~PrioritizedTask();
 
-	unsigned getPriority();
-	void setPriority(unsigned p);
+	const int getPriority();
+	void setPriority(int p);
 
-	unsigned getDuration();
-	void setDuration(unsigned d);
+	const int getDuration();
+	void setDuration(int d);
 
-	std::string getSummary();
+	const int getID();
+	void setID(int ID);
+
+	const std::string getSummary();
 	void setSummary(std::string s);
 
-	std::string getAssignedTo();
+	const std::string getAssignedTo();
 	void setAssignedTo(std::string who);
+
+	bool operator==(int a);
+
 private:
-	unsigned priority;
-	unsigned duration;
+	int priority;
+	int duration;
+	int id;
 	std::string summary;
 	std::string assignedTo;
 };
+
+std::ostream& operator<<(std::ostream& out, PrioritizedTask& t);
+
 

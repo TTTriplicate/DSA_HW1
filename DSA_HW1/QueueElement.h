@@ -5,10 +5,11 @@ class QueueElement
 {
 public:
 	QueueElement();
+	
 	~QueueElement();
 
-	PrioritizedTask getTask();
-	void setTask(PrioritizedTask t);
+	std::shared_ptr<PrioritizedTask> getTask();
+	void setTask(std::shared_ptr<PrioritizedTask> t);
 
 	std::shared_ptr<QueueElement> getNext();
 	void setNext(std::shared_ptr<QueueElement> newNext);
@@ -16,18 +17,24 @@ public:
 	std::shared_ptr<QueueElement> getPrev();
 	void setPrev(std::shared_ptr<QueueElement> newPrev);
 
-	const unsigned getPriority();
-	void setPriority(unsigned p);
+	const int getPriority();
+	void setPriority(int p);
+
+	const int getID();
+	void setID(int ID);
+
 
 	bool operator< (const QueueElement& a);
 	bool operator> (const QueueElement& a);
 	bool operator== (const QueueElement& a);
+	bool operator== (const int& ID);
 
 private:
-	unsigned priority;
+	int priority;
+	int id;
 	std::shared_ptr<QueueElement> next;
 	std::shared_ptr<QueueElement> prev;
-	PrioritizedTask task;
+	std::shared_ptr<PrioritizedTask> task;
 
 };
 
