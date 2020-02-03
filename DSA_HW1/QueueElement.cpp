@@ -5,7 +5,8 @@ QueueElement::QueueElement() {
 	prev = nullptr;
 };
 
-QueueElement::~QueueElement() {};
+QueueElement::~QueueElement() {
+};
 
 std::shared_ptr<QueueElement> QueueElement::getNext() {
 	return next;

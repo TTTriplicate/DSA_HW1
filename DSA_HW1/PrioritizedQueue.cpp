@@ -20,20 +20,32 @@ void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task, int pri
 	}
 	else {
 		cursor = head;
-		while (*(cursor) < *(insert)) {
+		while (cursor != nullptr) {
 			if (cursor->getNext() == nullptr) {
-				cursor->setNext(insert);
-				insert->setPrev(cursor);
+				if (*(cursor) > * (insert)) {
+					insert->setPrev(cursor->getPrev());
+					insert->setNext(cursor);
+					cursor->setPrev(insert);
+					break;
+				}
+				else {
+					cursor->setNext(insert);
+					insert->setPrev(cursor);
+					break;
+				}
+			}
+			else if (*(cursor) > *(insert)) {
+				insert->setPrev(cursor->getPrev());
+				insert->setNext(cursor);
+				cursor->setPrev(insert);
 				break;
 			}
 			else {
 				cursor = cursor->getNext();
 			}
 		}
-		if (*(cursor->getNext()) > *(insert)) {
-			insert->setNext(cursor->getNext());
-			insert->setPrev(cursor);
-			cursor->setNext(insert);
+		if (insert->getPrev() == nullptr) {
+			head = insert;
 		}
 	}
 
@@ -45,18 +57,18 @@ std::shared_ptr<PrioritizedTask> PrioritizedQueue::findTask(int id) {
 		throw std::runtime_error("Error: Queue is empty.");
 	}
 	cursor = head;
-	if (*(cursor) == id) {
-		return cursor->getTask();
+	while (cursor != nullptr) {
+		if (*(cursor) == id) {
+			return cursor->getTask();
+		}
+		else {
+			cursor = cursor->getNext();
+		}
 	}
-	else if (cursor->getNext() == nullptr) {
-		throw std::invalid_argument("Task not found.");
-	}
-	else {
-		cursor = cursor->getNext();
-	}
+	throw std::invalid_argument("Task not found.");
 }
 
-void PrioritizedQueue::deleteElement(int id) {
+std::shared_ptr<PrioritizedTask> PrioritizedQueue::deleteElement(int id) {
 	findTask(id);
 	if (cursor->getPrev() != nullptr && cursor->getNext()!= nullptr) {
 		cursor->getNext()->setPrev(cursor->getPrev());
@@ -68,5 +80,17 @@ void PrioritizedQueue::deleteElement(int id) {
 	else if (cursor->getPrev() == nullptr) {
 		head = cursor->getNext();
 	}
-	delete &cursor;
+	return cursor->getTask();
+}
+
+std::ostream& operator<<(std::ostream& out, PrioritizedQueue& queue) {
+	if (queue.head == nullptr) {
+		throw std::runtime_error("List is empty.");
+	}
+	queue.cursor = queue.head;
+	while (queue.cursor != nullptr) {
+		out << *(queue.cursor->getTask());
+		queue.cursor = queue.cursor->getNext();
+	}
+	return out;
 }

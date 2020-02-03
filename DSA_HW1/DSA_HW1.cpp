@@ -23,7 +23,7 @@ int main()
 	while (true) {
 		std::string input;
 		std::cout << "Please enter an option:" << std::endl;
-		std::cout << "(C)reate a task, (S)elect a task, (V)iew all tasks, e(X)it:" << std::endl;
+		std::cout << "(C)reate a task, (S)elect a task, (R)emove a task, (V)iew all tasks, or e(X)it:" << std::endl;
 		getline(std::cin, input);
 		try {
 			if (input.length() > 1) {
@@ -77,7 +77,54 @@ int main()
 				std::cout << *(queue.findTask(std::stoi(fields[4]))) << std::endl;
 			}
 
+			else if (tolower(input[0]) == 's') {
+				while (true) {
+					std::cout << "Enter the ID of the task you'd like to view: " << std::endl;
+					getline(std::cin, input);
+					bool badDigit = false;
+					for (char c : input) {
+						if (!isdigit(c)) {
+							badDigit = true;
+							break;
+						}
+						}
+					if(badDigit){
+						std::cout << "Please enter only numbers." << std::endl;
+						continue;
+					}
+					else {
+						break;
+					}
+				}
+				std::cout << *(queue.findTask(std::stoi(input)));
+			}
+
+			else if (tolower(input[0]) == 'v') {
+				std::cout << queue;
+			}
+
+			else if (tolower(input[0]) == 'r') {
+				std::string toRem;
+				bool digits = false;
+				while (!digits) {
+					std::cout << "Enter the ID of the task you want to remove:" << std::endl;
+					digits = true;
+					getline(std::cin, toRem);
+					for (char c : toRem) {
+						if (!isdigit(c)) {
+							digits = false;
+						}
+					}
+				}
+				std::shared_ptr<PrioritizedTask> toDel = queue.deleteElement(std::stoi(toRem));
+				std::cout << toDel << "Has been removed from the list." << std::endl;
+			}
+
+			else if (tolower(input[0]) == 'x') {
+				break;
+			}
 		}
+
 		catch (std::invalid_argument& e) {
 			std::cerr << e.what();
 		}
