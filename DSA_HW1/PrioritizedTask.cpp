@@ -10,7 +10,9 @@ PrioritizedTask::PrioritizedTask(std::string fields[5]) {
 	setID(std::stoi(fields[4]));
 }
 
-PrioritizedTask::~PrioritizedTask() {};
+PrioritizedTask::~PrioritizedTask() {
+	std::cout << "Task " + std::to_string(id) + " deleted" << std::endl;
+};
 
 void PrioritizedTask::setPriority(int p) {
 	priority = p;
@@ -47,13 +49,24 @@ void PrioritizedTask::setAssignedTo(std::string who) {
 	assignedTo = who;
 }
 
-bool PrioritizedTask::operator==(int a) {
+bool PrioritizedTask::operator==(const int& a) {
 	return id == a;
 }
 
+bool PrioritizedTask::operator==(const PrioritizedTask& t) {
+	return id == t.id;
+}
+bool PrioritizedTask::operator<(const PrioritizedTask& t) {
+	return priority < t.priority;
+}
+bool PrioritizedTask::operator>(const PrioritizedTask& t) {
+	return priority > t.priority;
+}
+
+
 std::ostream& operator<<(std::ostream& out, PrioritizedTask& task) {
 	out << "Summary: " + task.getSummary() << std::endl << "Assigned To: " + task.getAssignedTo() << std::endl
-		<< "Duration: " + std::to_string(task.getDuration()) + "days." << std::endl << "Priority: " + std::to_string(task.getPriority()) << std::endl
+		<< "Duration: " + std::to_string(task.getDuration()) + " days." << std::endl << "Priority: " + std::to_string(task.getPriority()) << std::endl
 		<< "ID: " + std::to_string(task.getID()) << std::endl;
 	return out;
 }

@@ -5,7 +5,12 @@ QueueElement::QueueElement() {
 	prev = nullptr;
 };
 
-QueueElement::~QueueElement() {
+QueueElement::~QueueElement() {//clear pointers, decrement shared_ptr reference counts
+	std::cout << "Queued task " + std::to_string(task->getID()) + " deleting..." << std::endl;
+	task.reset();
+	next.reset();
+	prev.reset();
+
 };
 
 std::shared_ptr<QueueElement> QueueElement::getNext() {
@@ -22,19 +27,6 @@ void QueueElement::setPrev(std::shared_ptr<QueueElement> newPrev) {
 	prev = newPrev;
 }
 
-void QueueElement::setPriority(int p) {
-	priority = p;
-}
-const int QueueElement::getPriority() {
-	return priority;
-}
-
-void QueueElement::setID(int ID) {
-	id = ID;
-}
-const int QueueElement::getID() {
-	return id;
-}
 
 
 void QueueElement::setTask(std::shared_ptr<PrioritizedTask> t) {
@@ -45,16 +37,16 @@ std::shared_ptr<PrioritizedTask> QueueElement::getTask() {
 }
 
 bool QueueElement::operator<(const QueueElement& a) {
-	return priority < a.priority;
+	return *(task) < *(a.task);
 }
 
 bool QueueElement::operator== (const QueueElement& a) {//once priority is established, check id for exact item
-	return id == a.id;
+	return *(task) == *(a.task);
 }
 bool QueueElement::operator== (const int& ID) {
-	return id == ID;
+	return *(task) == ID;
 }
 
 bool QueueElement::operator> (const QueueElement& a) {
-	return priority > a.priority;
+	return *(task) > *(a.task);
 }

@@ -23,7 +23,12 @@ public:
 	const std::string getAssignedTo();
 	void setAssignedTo(std::string who);
 
-	bool operator==(int a);
+	bool operator==(const int& a);
+
+	bool operator==(const PrioritizedTask& t);
+	bool operator<(const PrioritizedTask& t);
+	bool operator>(const PrioritizedTask& t);
+	
 
 private:
 	int priority;

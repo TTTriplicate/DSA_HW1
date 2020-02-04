@@ -6,14 +6,26 @@ PrioritizedQueue::PrioritizedQueue() {
 }
 
 PrioritizedQueue::~PrioritizedQueue() {
-//delete everything
+	if (head == nullptr) {
+
+	}
+	else if (head->getNext() == nullptr) {
+		head.reset();
+	}
+	else {
+		cursor = head->getNext();
+		do {
+			cursor->getPrev().reset();
+			cursor = cursor->getNext();
+		} while (cursor->getNext() != nullptr);
+		head.reset();
+		cursor.reset();
+	}
 }
 
-void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task, int priority, int id) {
+void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task) {
 	QueueElement newTask;
 	newTask.setTask(task);
-	newTask.setPriority(priority);
-	newTask.setID(id);
 	std::shared_ptr<QueueElement> insert = std::make_shared<QueueElement>(newTask);
 	if (head == nullptr) {
 		head = insert;
@@ -25,6 +37,9 @@ void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task, int pri
 				if (*(cursor) > * (insert)) {
 					insert->setPrev(cursor->getPrev());
 					insert->setNext(cursor);
+					if (cursor->getPrev() != nullptr) {
+						cursor->getPrev()->setNext(insert);
+					}
 					cursor->setPrev(insert);
 					break;
 				}
@@ -34,10 +49,17 @@ void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task, int pri
 					break;
 				}
 			}
-			else if (*(cursor) > *(insert)) {
-				insert->setPrev(cursor->getPrev());
-				insert->setNext(cursor);
-				cursor->setPrev(insert);
+			else if (*(cursor) > * (insert)) {
+				if (cursor->getPrev() != nullptr) {
+					insert->setNext(cursor);
+					insert->setPrev(cursor->getPrev());
+					cursor->getPrev()->setNext(insert);
+					cursor->setPrev(insert);
+				}
+				else {
+					insert->setNext(cursor);
+					cursor->setPrev(insert);
+				}
 				break;
 			}
 			else {
@@ -70,15 +92,23 @@ std::shared_ptr<PrioritizedTask> PrioritizedQueue::findTask(int id) {
 
 std::shared_ptr<PrioritizedTask> PrioritizedQueue::deleteElement(int id) {
 	findTask(id);
-	if (cursor->getPrev() != nullptr && cursor->getNext()!= nullptr) {
-		cursor->getNext()->setPrev(cursor->getPrev());
-		cursor->getPrev()->setNext(cursor->getNext());
+	if (cursor->getPrev() == nullptr) {
+		if (cursor->getNext() == nullptr) {
+			head = nullptr;
+		}
+		else {
+			cursor->getNext()->setPrev(nullptr);
+			head = cursor->getNext();
+		}
 	}
-	else if (cursor->getNext() == nullptr) {
-		cursor->getPrev()->setNext(nullptr);
-	}
-	else if (cursor->getPrev() == nullptr) {
-		head = cursor->getNext();
+	else {
+		if (cursor->getNext() == nullptr){
+			cursor->getPrev()->setNext(nullptr);
+		}
+		else {
+			cursor->getPrev()->setNext(cursor->getNext());
+			cursor->getNext()->setPrev(cursor->getPrev());
+		}
 	}
 	return cursor->getTask();
 }
