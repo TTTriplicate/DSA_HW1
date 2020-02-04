@@ -6,20 +6,9 @@ PrioritizedQueue::PrioritizedQueue() {
 }
 
 PrioritizedQueue::~PrioritizedQueue() {
-	if (head == nullptr) {
-
-	}
-	else if (head->getNext() == nullptr) {
-		head.reset();
-	}
-	else {
-		cursor = head->getNext();
-		do {
-			cursor->getPrev().reset();
-			cursor = cursor->getNext();
-		} while (cursor->getNext() != nullptr);
-		head.reset();
-		cursor.reset();
+	cursor = nullptr;
+	while (head != nullptr) {
+		deleteElement(head->getTask()->getID());
 	}
 }
 
