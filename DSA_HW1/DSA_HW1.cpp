@@ -67,8 +67,8 @@ int main()
 				fields[4] = std::to_string(id);
 				std::cout << "The unique ID for this task is: " << fields[4] << std::endl;
 
-				PrioritizedTask newTask(fields);
-				auto toAdd = std::make_shared<PrioritizedTask>(newTask);
+				//PrioritizedTask newTask(fields);
+				auto toAdd = std::make_shared<PrioritizedTask>(PrioritizedTask(fields));
 				queue.addElement(toAdd);
 				std::cout << *(queue.findTask(std::stoi(fields[4]))) << std::endl;
 			}

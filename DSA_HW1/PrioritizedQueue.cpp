@@ -24,9 +24,7 @@ PrioritizedQueue::~PrioritizedQueue() {
 }
 
 void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task) {
-	QueueElement newTask;
-	newTask.setTask(task);
-	std::shared_ptr<QueueElement> insert = std::make_shared<QueueElement>(newTask);
+	auto insert = std::make_shared<QueueElement>(QueueElement(task));
 	if (head == nullptr) {
 		head = insert;
 	}
@@ -34,7 +32,7 @@ void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task) {
 		cursor = head;
 		while (cursor != nullptr) {
 			if (cursor->getNext() == nullptr) {
-				if (*(cursor) > * (insert)) {
+				if (*(cursor) > *(insert)) {
 					insert->setPrev(cursor->getPrev());
 					insert->setNext(cursor);
 					if (cursor->getPrev() != nullptr) {
@@ -70,8 +68,6 @@ void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task) {
 			head = insert;
 		}
 	}
-
-
 }
 
 std::shared_ptr<PrioritizedTask> PrioritizedQueue::findTask(int id) {

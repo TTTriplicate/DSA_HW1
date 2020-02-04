@@ -5,6 +5,7 @@ class QueueElement
 {
 public:
 	QueueElement();
+	QueueElement(std::shared_ptr<PrioritizedTask> t);
 	
 	~QueueElement();
 

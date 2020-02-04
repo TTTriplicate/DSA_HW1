@@ -5,6 +5,13 @@ QueueElement::QueueElement() {
 	prev = nullptr;
 };
 
+QueueElement::QueueElement(std::shared_ptr<PrioritizedTask> t) {
+	next = nullptr;
+	prev = nullptr;
+	task = t;
+};
+
+
 QueueElement::~QueueElement() {//clear pointers, decrement shared_ptr reference counts
 	std::cout << "Queued task " + std::to_string(task->getID()) + " deleting..." << std::endl;
 	task.reset();
