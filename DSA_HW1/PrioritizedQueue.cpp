@@ -36,7 +36,7 @@ void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task) {
 					break;
 				}
 			}
-			else if (*(cursor) > * (insert)) {		
+			else if (*(cursor) > *(insert)) {		
 				if (cursor->getPrev() != nullptr) {	//insert in middle of list
 					insert->setNext(cursor);
 					insert->setPrev(cursor->getPrev());
