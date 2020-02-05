@@ -31,8 +31,16 @@ int main()
 					}
 				}
 
-				std::cout << "Who will complete this task?" << std::endl;
-				getline(std::cin, fields[1]);
+				while (true) {
+					std::cout << "Who will complete this task:" << std::endl;
+					getline(std::cin, fields[1]);
+					if (fields[1].length() == 0) {
+						std::cout << "An operator must be assigned." << std::endl;
+					}
+					else {
+						break;
+					}
+				}
 
 				while (true) {
 					std::cout << "Enter a duration in days, between 1 and 15:" << std::endl;
@@ -66,11 +74,8 @@ int main()
 				int id = sequence.getID();
 				fields[4] = std::to_string(id);
 				std::cout << "The unique ID for this task is: " << fields[4] << std::endl;
-
-				//PrioritizedTask newTask(fields);
-				auto toAdd = std::make_shared<PrioritizedTask>(PrioritizedTask(fields));
-				queue.addElement(toAdd);
-				std::cout << *(queue.findTask(std::stoi(fields[4]))) << std::endl;
+				queue.addElement(std::make_shared<PrioritizedTask>(PrioritizedTask(fields)));
+				//std::cout << *(queue.findTask(std::stoi(fields[4]))) << std::endl;
 			}
 
 			else if (tolower(input[0]) == 's') {
@@ -121,6 +126,9 @@ int main()
 			else if (tolower(input[0]) == 'x') {
 				break;
 			}
+			else {
+			throw std::invalid_argument("Please enter a valid option.");
+}
 		}
 
 		catch (std::invalid_argument& e) {

@@ -12,7 +12,7 @@ QueueElement::QueueElement(std::shared_ptr<PrioritizedTask> t) {
 };
 
 
-QueueElement::~QueueElement() {//clear pointers, decrement shared_ptr reference counts
+QueueElement::~QueueElement() {//clear pointers, decrementing shared_ptr reference counts
 	std::cout << "Queued task " + std::to_string(task->getID()) + " deleting..." << std::endl;
 	task.reset();
 	next.reset();
@@ -43,17 +43,17 @@ std::shared_ptr<PrioritizedTask> QueueElement::getTask() {
 	return task;
 }
 
-bool QueueElement::operator<(const QueueElement& a) {
+bool QueueElement::operator<(const QueueElement& a) {//compare tasks to find location in list
 	return *(task) < *(a.task);
 }
 
 bool QueueElement::operator== (const QueueElement& a) {//once priority is established, check id for exact item
-	return *(task) == *(a.task);
+	return *(task) == *(a.task);						//unused
 }
-bool QueueElement::operator== (const int& ID) {
+bool QueueElement::operator== (const int& ID) {//compare task to int
 	return *(task) == ID;
 }
 
-bool QueueElement::operator> (const QueueElement& a) {
+bool QueueElement::operator> (const QueueElement& a) {//compare tasks to find location in list
 	return *(task) > *(a.task);
 }

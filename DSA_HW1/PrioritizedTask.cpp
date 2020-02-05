@@ -49,22 +49,22 @@ void PrioritizedTask::setAssignedTo(std::string who) {
 	assignedTo = who;
 }
 
-bool PrioritizedTask::operator==(const int& a) {
+bool PrioritizedTask::operator==(const int& a) {//Check ID against a supplied int
 	return id == a;
 }
 
-bool PrioritizedTask::operator==(const PrioritizedTask& t) {
+bool PrioritizedTask::operator==(const PrioritizedTask& t) {//compare equality by ID
 	return id == t.id;
 }
-bool PrioritizedTask::operator<(const PrioritizedTask& t) {
+bool PrioritizedTask::operator<(const PrioritizedTask& t) {//compare less/greater by priorities
 	return priority < t.priority;
 }
-bool PrioritizedTask::operator>(const PrioritizedTask& t) {
+bool PrioritizedTask::operator>(const PrioritizedTask& t) {//compare less/greater by priorities
 	return priority > t.priority;
 }
 
 
-std::ostream& operator<<(std::ostream& out, PrioritizedTask& task) {
+std::ostream& operator<<(std::ostream& out, PrioritizedTask& task) {//push task info to an ostream and return it
 	out << "Summary: " + task.getSummary() << std::endl << "Assigned To: " + task.getAssignedTo() << std::endl
 		<< "Duration: " + std::to_string(task.getDuration()) + " days." << std::endl << "Priority: " + std::to_string(task.getPriority()) << std::endl
 		<< "ID: " + std::to_string(task.getID()) << std::endl;

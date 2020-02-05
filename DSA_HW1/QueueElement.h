@@ -18,7 +18,7 @@ public:
 	std::shared_ptr<QueueElement> getPrev();
 	void setPrev(std::shared_ptr<QueueElement> newPrev);
 
-	bool operator< (const QueueElement& a);
+	bool operator< (const QueueElement& a);//allows easy comparisons
 	bool operator> (const QueueElement& a);
 	bool operator== (const QueueElement& a);
 	bool operator== (const int& ID);
