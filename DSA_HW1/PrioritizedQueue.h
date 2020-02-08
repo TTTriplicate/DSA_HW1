@@ -7,7 +7,7 @@ class PrioritizedQueue
 public:
 	PrioritizedQueue();
 	~PrioritizedQueue();
-	void addElement(std::shared_ptr<PrioritizedTask> task);
+	int addElement(std::shared_ptr<PrioritizedTask> task);
 	std::shared_ptr<PrioritizedTask> deleteElement(int id);
 	std::shared_ptr<PrioritizedTask> findTask(int id);
 	std::shared_ptr<PrioritizedTask> peek();

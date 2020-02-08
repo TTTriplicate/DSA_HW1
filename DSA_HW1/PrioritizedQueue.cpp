@@ -12,7 +12,7 @@ PrioritizedQueue::~PrioritizedQueue() {
 	}
 }
 
-void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task) {
+int PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task) {
 	auto insert = std::make_shared<QueueElement>(QueueElement(task));
 	if (head == nullptr) {
 		head = insert;		//quick insert if list is empty
@@ -57,6 +57,8 @@ void PrioritizedQueue::addElement(std::shared_ptr<PrioritizedTask> task) {
 			head = insert;						//head of the list
 		}
 	}
+	return insert->getTask()->getID();
+
 }
 
 std::shared_ptr<PrioritizedTask> PrioritizedQueue::findTask(int id) {
@@ -80,10 +82,10 @@ std::shared_ptr<PrioritizedTask> PrioritizedQueue::peek() {
 }
 
 std::shared_ptr<PrioritizedTask> PrioritizedQueue::deleteElement(int id) {
-	findTask(id);//set cursor to correct task, or throw exception
+	findTask(id);		//set cursor to correct task, or throw exception
 	if (cursor->getPrev() == nullptr) {
 		if (cursor->getNext() == nullptr) {//had a lot of read access errors on nullptr links
-			head = nullptr;					//this nested if/else ended it. Curious if theres a better way
+			head = nullptr;					//this nested if/else ended it. Curious if there's a better way
 		}
 		else {
 			cursor->getNext()->setPrev(nullptr);
@@ -99,7 +101,9 @@ std::shared_ptr<PrioritizedTask> PrioritizedQueue::deleteElement(int id) {
 			cursor->getNext()->setPrev(cursor->getPrev());
 		}
 	}
-	return cursor->getTask();
+	auto pull = cursor->getTask();
+	cursor = nullptr;	//necessary to make it delete now, instead of at next cursor operation
+	return pull;
 }
 
 std::ostream& operator<<(std::ostream& out, PrioritizedQueue& queue) {

@@ -73,8 +73,8 @@ int main()
 				}
 				int id = sequence.getID();
 				fields[4] = std::to_string(id);
-				std::cout << "The unique ID for this task is: " << fields[4] << std::endl;
-				queue.addElement(std::make_shared<PrioritizedTask>(PrioritizedTask(fields)));
+				int done = queue.addElement(std::make_shared<PrioritizedTask>(PrioritizedTask(fields)));
+				std::cout << "The unique ID for this task is: " << done << std::endl;
 				//std::cout << *(queue.findTask(std::stoi(fields[4]))) << std::endl;
 			}
 
@@ -120,7 +120,7 @@ int main()
 					}
 				}
 				std::shared_ptr<PrioritizedTask> toDel = queue.deleteElement(std::stoi(toRem));
-				std::cout <<  "Task " << *(toDel) << "Has been removed from the queue." << std::endl;
+				std::cout <<  "Task " << toDel->getID() << " has been removed from the queue." << std::endl;
 			}
 
 			else if (tolower(input[0]) == 'x') {
