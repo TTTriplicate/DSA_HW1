@@ -101,11 +101,11 @@ int main()
 						break;
 					}
 				}
-				std::cout << *(queue.findTask(std::stoi(input)));//outputs the task
-			}													//see PrioritizedTask.cpp line 67
+				std::cout << std::endl <<*(queue.findTask(std::stoi(input))) << std::endl;//outputs the task
+			}																		//see PrioritizedTask.cpp line 67
 
 			else if (tolower(input[0]) == 'v') {
-				std::cout << queue;			//see PrioritizedQueue.cpp line 110
+				std::cout << std::endl << queue << std::endl;			//see PrioritizedQueue.cpp line 110
 			}
 
 			else if (tolower(input[0]) == 'r') {

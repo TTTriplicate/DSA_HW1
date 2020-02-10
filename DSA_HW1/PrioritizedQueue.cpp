@@ -116,7 +116,7 @@ std::ostream& operator<<(std::ostream& out, PrioritizedQueue& queue) {
 	while (queue.cursor != nullptr) {					//makes a decent looking table of tasks
 		out << std::to_string(queue.cursor->getTask()->getID()) << '\t'
 			<< std::to_string(queue.cursor->getTask()->getPriority()) << "\t\t"
-			<< queue.cursor->getTask()->getSummary() << std::endl << std::endl;
+			<< queue.cursor->getTask()->getSummary() << std::endl;
 
 		queue.cursor = queue.cursor->getNext();
 	}
