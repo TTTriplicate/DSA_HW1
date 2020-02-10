@@ -5,7 +5,7 @@ IDGenerator::IDGenerator() {
 }
 
 int IDGenerator::getID() {
-	return ID++;
+	return ID++;//returns current ID, then increments it
 }
 
 IDGenerator::~IDGenerator() {};

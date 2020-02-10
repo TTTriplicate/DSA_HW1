@@ -11,8 +11,8 @@ PrioritizedTask::PrioritizedTask(std::string fields[5]) {
 }
 
 PrioritizedTask::~PrioritizedTask() {
-	std::cout << "Task " + std::to_string(id) + " deleted" << std::endl;
-};
+
+ };
 
 void PrioritizedTask::setPriority(int p) {
 	priority = p;
@@ -65,8 +65,8 @@ bool PrioritizedTask::operator>(const PrioritizedTask& t) {//compare less/greate
 
 
 std::ostream& operator<<(std::ostream& out, PrioritizedTask& task) {//push task info to an ostream and return it
-	out << "Summary: " + task.getSummary() << std::endl << "Assigned To: " + task.getAssignedTo() << std::endl
-		<< "Duration: " + std::to_string(task.getDuration()) + " days." << std::endl << "Priority: " + std::to_string(task.getPriority()) << std::endl
-		<< "ID: " + std::to_string(task.getID()) << std::endl;
+	out << "Summary: " + task.summary << std::endl << "Assigned To: " + task.assignedTo << std::endl
+		<< "Duration: " + std::to_string(task.duration) + " days." << std::endl << "Priority: " + std::to_string(task.priority) << std::endl
+		<< "ID: " + std::to_string(task.id) << std::endl;
 	return out;
 }

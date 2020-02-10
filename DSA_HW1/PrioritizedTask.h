@@ -28,7 +28,8 @@ public:
 	bool operator==(const PrioritizedTask& t);
 	bool operator<(const PrioritizedTask& t);
 	bool operator>(const PrioritizedTask& t);
-	
+	friend std::ostream& operator<<(std::ostream& out, PrioritizedTask& t);
+
 
 private:
 	int priority;
@@ -38,6 +39,5 @@ private:
 	std::string assignedTo;
 };
 
-std::ostream& operator<<(std::ostream& out, PrioritizedTask& t);
 
 

@@ -3,10 +3,11 @@
 
 PrioritizedQueue::PrioritizedQueue() {
 	head = nullptr;
+	cursor = nullptr;
 }
 
-PrioritizedQueue::~PrioritizedQueue() {
-	cursor = nullptr;
+PrioritizedQueue::~PrioritizedQueue() {//had an issue with implicit removal
+	cursor = nullptr;					//so I just made it explicitly delete all nodes
 	while (head != nullptr) {
 		deleteElement(head->getTask()->getID());
 	}
@@ -67,7 +68,7 @@ std::shared_ptr<PrioritizedTask> PrioritizedQueue::findTask(int id) {
 	}
 	cursor = head;
 	while (cursor != nullptr) {
-		if (*(cursor) == id) {
+		if (*(cursor) == id) {//compares id of task in current node to user provided id
 			return cursor->getTask();
 		}
 		else {
@@ -112,10 +113,11 @@ std::ostream& operator<<(std::ostream& out, PrioritizedQueue& queue) {
 	}
 	queue.cursor = queue.head;
 	out << "ID:" << '\t' << "Priority:" << '\t' << "Summary:" << std::endl;
-	while (queue.cursor != nullptr) {//makes a decent looking table of tasks
+	while (queue.cursor != nullptr) {					//makes a decent looking table of tasks
 		out << std::to_string(queue.cursor->getTask()->getID()) << '\t'
 			<< std::to_string(queue.cursor->getTask()->getPriority()) << "\t\t"
 			<< queue.cursor->getTask()->getSummary() << std::endl << std::endl;
+
 		queue.cursor = queue.cursor->getNext();
 	}
 

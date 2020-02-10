@@ -14,6 +14,6 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, PrioritizedQueue& queue);
 private:
 	std::shared_ptr<QueueElement> head;
-	std::shared_ptr<QueueElement> cursor;
+	std::shared_ptr<QueueElement> cursor;//an iterator
 };
 

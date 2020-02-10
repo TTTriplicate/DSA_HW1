@@ -45,10 +45,10 @@ int main()
 				while (true) {
 					std::cout << "Enter a duration in days, between 1 and 15:" << std::endl;
 					getline(std::cin, fields[2]);
-					if (!isdigit(fields[2][0]) || (fields[2].length() > 1 && !isdigit(fields[2][1]))) {
+					if (!isdigit(fields[2][0]) || (fields[2].length() > 1 && !isdigit(fields[2][1]))) {//checks for 1 or 2 digits
 						std::cout << "Please only enter numbers." << std::endl;
 					}
-					else if (std::stoi(fields[2]) < 1 || std::stoi(fields[2]) > 15) {
+					else if (std::stoi(fields[2]) < 1 || std::stoi(fields[2]) > 15) {//checks for value
 						std::cout << "Please enter a duration between 1 and 15:" << std::endl;
 					}
 					else {
@@ -59,7 +59,7 @@ int main()
 					std::cout << "Please enter a priority, between 1 and 5:" << std::endl;
 					getline(std::cin, fields[3]);
 					if (fields[3].length() > 1) {
-						std::cout << "Input too long.  Please enter one number, between 1 and five." << std::endl;
+						std::cout << "Input too long.  Please enter one number, between one and five." << std::endl;
 					}
 					else if (!isdigit(fields[3][0])) {
 						std::cout << "Please enter only numbers." << std::endl;
@@ -71,10 +71,9 @@ int main()
 						break;
 					}
 				}
-				int id = sequence.getID();
-				fields[4] = std::to_string(id);
-				int done = queue.addElement(std::make_shared<PrioritizedTask>(PrioritizedTask(fields)));
-				std::cout << "The unique ID for this task is: " << done << std::endl;
+				fields[4] = std::to_string(sequence.getID());//there were issues with using a raw int for this
+				int done = queue.addElement(std::make_shared<PrioritizedTask>(PrioritizedTask(fields)));//constructs task, makes shared ptr and
+				std::cout << "The unique ID for this task is: " << done << std::endl;					//sends to queue for insertion
 				//std::cout << *(queue.findTask(std::stoi(fields[4]))) << std::endl;
 			}
 
@@ -84,6 +83,9 @@ int main()
 				while (Digits) {
 					std::cout << "Enter the ID of the task you'd like to view: " << std::endl;
 					getline(std::cin, input);
+					if (input == "") {
+						Digits = false;
+					}
 					for (char c : input) {
 						if (!isdigit(c)) {
 							Digits = false;
@@ -99,27 +101,38 @@ int main()
 						break;
 					}
 				}
-				std::cout << *(queue.findTask(std::stoi(input)));
-			}
+				std::cout << *(queue.findTask(std::stoi(input)));//outputs the task
+			}													//see PrioritizedTask.cpp line 67
 
 			else if (tolower(input[0]) == 'v') {
-				std::cout << queue;
+				std::cout << queue;			//see PrioritizedQueue.cpp line 110
 			}
 
 			else if (tolower(input[0]) == 'r') {
-				std::string toRem;
-				bool digits = false;
-				while (!digits) {
-					std::cout << "Enter the ID of the task you want to remove:" << std::endl;
-					digits = true;
-					getline(std::cin, toRem);
-					for (char c : toRem) {
+				bool Digits = true;
+				std::cout << "Please enter the ID of the task you would like to remove: " << std::endl;
+
+				while (Digits) {
+					getline(std::cin, input);
+					if (input == "") {
+						Digits = false;
+					}
+					for (char c : input) {
 						if (!isdigit(c)) {
-							digits = false;
+							Digits = false;
+							break;
 						}
 					}
+					if (!Digits) {
+						std::cout << "Please enter only numbers." << std::endl;
+						Digits = true;
+						continue;
+					}
+					else {
+						break;
+					}
 				}
-				std::shared_ptr<PrioritizedTask> toDel = queue.deleteElement(std::stoi(toRem));
+				std::shared_ptr<PrioritizedTask> toDel = queue.deleteElement(std::stoi(input));
 				std::cout <<  "Task " << toDel->getID() << " has been removed from the queue." << std::endl;
 			}
 

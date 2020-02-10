@@ -13,7 +13,6 @@ QueueElement::QueueElement(std::shared_ptr<PrioritizedTask> t) {
 
 
 QueueElement::~QueueElement() {//clear pointers, decrementing shared_ptr reference counts
-	std::cout << "Queued task " + std::to_string(task->getID()) + " deleting..." << std::endl;
 	task.reset();
 	next.reset();
 	prev.reset();
@@ -55,5 +54,5 @@ bool QueueElement::operator== (const int& ID) {//compare task to int
 }
 
 bool QueueElement::operator> (const QueueElement& a) {//compare tasks to find location in list
-	return *(task) > *(a.task);
+	return *(task) > *(a.task);							
 }
